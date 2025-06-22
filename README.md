@@ -75,4 +75,4 @@ Pull requests welcome! Please maintain the minimalistic design philosophy.
 
 ---
 
-*Made with ❤️ for system administrators and developers*
+*Made with ❤️  for system administrators and developers*
