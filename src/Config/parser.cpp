@@ -57,9 +57,9 @@ bool ConfigParser::saveConfig(const std::string& config_path) const {
     file << "[display]\n";
     file << "update_interval = " << config.update_interval << "\n";
     file << "max_processes = " << config.max_processes << "\n";
-    file << "show_colors = " << (config.show_colors ? "true" : "false") << "\n";
     file << "show_load_avg = " << (config.show_load_avg ? "true" : "false") << "\n";
     file << "show_memory_bar = " << (config.show_memory_bar ? "true" : "false") << "\n";
+    file << "header = " << (config.header ? "true" : "false") << "\n";
     file << "show_cpu_bar = " << (config.show_cpu_bar ? "true" : "false") << "\n";
     file << "progress_bar_width = " << config.progress_bar_width << "\n";
     file << "theme = " << config.theme << "\n\n";
@@ -128,12 +128,12 @@ bool ConfigParser::parseCommandLine(int argc, char* argv[]) {
                 std::cerr << "Error: --max-processes requires a number\n";
                 return false;
             }
-        } else if (arg == "--no-color") {
-            config.show_colors = false;
         } else if (arg == "--sort-memory") {
             config.sort_by = MtopConfig::SortBy::MEMORY;
         } else if (arg == "--sort-cpu") {
             config.sort_by = MtopConfig::SortBy::CPU;
+        } else if (arg == "--header") {
+            config.header = parseBool(argv[++i]);
         } else if (arg == "--sort-pid") {
             config.sort_by = MtopConfig::SortBy::PID;
         } else if (arg == "--sort-name") {
@@ -149,14 +149,13 @@ bool ConfigParser::parseCommandLine(int argc, char* argv[]) {
 }
 
 void ConfigParser::printHelp() const {
-    std::cout << "mtop - Minimalistic Modern Top\n\n";
+    std::cout << "mtop 2 - Modern Top 2 by TheMomer\n\n";
     std::cout << "Usage: mtop [OPTIONS]\n\n";
     std::cout << "Options:\n";
     std::cout << "  -h, --help              Show this help message\n";
     std::cout << "  -c, --config FILE       Use specified configuration file\n";
     std::cout << "  -d, --delay SECONDS     Update interval in seconds\n";
     std::cout << "  -n, --max-processes N   Maximum number of processes to show\n";
-    std::cout << "  --no-color              Disable colored output\n";
     std::cout << "  --sort-memory           Sort processes by memory usage (default)\n";
     std::cout << "  --sort-cpu              Sort processes by CPU usage\n";
     std::cout << "  --sort-pid              Sort processes by PID\n";
@@ -171,7 +170,6 @@ void ConfigParser::printConfig() const {
     std::cout << "Current configuration:\n";
     std::cout << "  Update interval: " << config.update_interval << "s\n";
     std::cout << "  Max processes: " << config.max_processes << "\n";
-    std::cout << "  Show colors: " << (config.show_colors ? "yes" : "no") << "\n";
     std::cout << "  Sort by: " << sortByToString(config.sort_by) << "\n";
     std::cout << "  Reverse sort: " << (config.reverse_sort ? "yes" : "no") << "\n";
 }
@@ -221,8 +219,6 @@ bool ConfigParser::parseLine(const std::string& line) {
         config.update_interval = parseInt(value);
     } else if (key == "max_processes") {
         config.max_processes = parseInt(value);
-    } else if (key == "show_colors") {
-        config.show_colors = parseBool(value);
     } else if (key == "show_load_avg") {
         config.show_load_avg = parseBool(value);
     } else if (key == "show_memory_bar") {
@@ -237,6 +233,8 @@ bool ConfigParser::parseLine(const std::string& line) {
         config.sort_by = parseSortBy(value);
     } else if (key == "reverse_sort") {
         config.reverse_sort = parseBool(value);
+    } else if (key == "header") {
+        config.header = parseBool(value);
     } else if (key == "show_process_state") {
         config.show_process_state = parseBool(value);
     } else if (key == "show_process_user") {

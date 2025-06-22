@@ -9,10 +9,10 @@ struct MtopConfig {
     // Display settings
     int update_interval = 2;
     int max_processes = 20;
-    bool show_colors = true;
     bool show_load_avg = true;
     bool show_memory_bar = true;
     bool show_cpu_bar = true;
+    bool header = true;
     
     // Process settings
     enum class SortBy {

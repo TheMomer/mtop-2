@@ -1,4 +1,4 @@
-project('mtop', 'cpp',
+project('mtop-2', 'cpp',
   version : '1.0.0',
   default_options : [
     'warning_level=3',
