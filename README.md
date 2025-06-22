@@ -1,6 +1,6 @@
 # mtop 2
 
-> Modern Top 2 - A fork of beautiful system monitor for Linux (creator: @AnmiTaliDev)
+> Modern Top 2 - A fork of beautiful system monitor for Linux (mtop creator: @AnmiTaliDev)
 
 [![C++](https://img.shields.io/badge/C++-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
